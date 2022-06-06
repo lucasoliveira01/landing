@@ -1,10 +1,9 @@
-import { useState } from "react";
-
-import Modal from "react-modal";
-
 import { Container, Details, Prices, Price, Subtitle, Title } from "./styles";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
+
+const BASIC_PLAN_PRICE = 49;
+const PRO_PLAN_PRICE = 79;
 
 export function Pricing({ onOpenNewSellingModal }) {
   return (
@@ -36,7 +35,10 @@ export function Pricing({ onOpenNewSellingModal }) {
                 <p>Neque volutpat ac tincidunt vitae.</p>
               </li>
             </ul>
-            <button type="button">
+            <button
+              type="button"
+              onClick={() => onOpenNewSellingModal(BASIC_PLAN_PRICE)}
+            >
               Buy this
               <FaShoppingCart />
             </button>
@@ -59,7 +61,10 @@ export function Pricing({ onOpenNewSellingModal }) {
                 <p>Neque volutpat ac tincidunt vitae.</p>
               </li>
             </ul>
-            <button type="button" onClick={onOpenNewSellingModal}>
+            <button
+              type="button"
+              onClick={() => onOpenNewSellingModal(PRO_PLAN_PRICE)}
+            >
               Buy this
               <FaShoppingCart />
             </button>

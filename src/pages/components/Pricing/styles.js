@@ -187,6 +187,12 @@ export const Price = styled.div`
     border-radius: 2rem;
     margin-top: 2rem;
 
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+
     svg {
       visibility: hidden;
     }

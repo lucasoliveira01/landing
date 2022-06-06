@@ -12,6 +12,11 @@ export const GlobalStyle = createGlobalStyle`
     vertical-align: baseline;
   }
 
+  body, input, textarea, button{
+        font-family: 'Sora', sans-serif;
+        font-weight: 400;
+    }
+
   button{
     cursor: pointer;
   }
@@ -19,6 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   :root{
     --white: #ffffff;
 
+    --gray-200: #23232b;
     --gray-300: #7B7B8F;
     --gray-400: #5B5B70;
     --gray-900: #1A1A21;
@@ -26,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
     --purple-500: #6746ED;
   }
 
-  body:before {
+  body::before {
     content: "";
     display: block;
     position: fixed;
@@ -85,20 +91,24 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .react-modal-content {
-        width: 100%;
-        max-width: 576px;
-        background: var(--background);
-        padding: 3rem;
+        width: 45%;
+        height: 17rem;
+        background: #23232b;
+        padding: 2rem;
         position: relative;
-        border-radius: 0.25rem ;
+        border-radius: 1rem ;
+        display: flex;
+        align-items: center;
+
     }
 
     .react-modal-close{
         position: absolute;
         right: 1.5rem;
-        top: 1.5rem;
+        top: 1rem;
         border: 0;
         background: transparent;
+        color: var(--white);
 
         transition: filter 0.2s;
 

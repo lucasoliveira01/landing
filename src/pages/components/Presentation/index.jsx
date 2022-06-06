@@ -1,3 +1,4 @@
+import React from "react";
 import { PurchaseButton } from "../PurchaseButton";
 import {
   Container,
@@ -6,7 +7,9 @@ import {
   PresentationDetails,
 } from "./styles";
 
-export function Presentation() {
+const BASIC_PLAN_PRICE = 49;
+
+export function Presentation({ onOpenNewSellingModal }) {
   return (
     <>
       <Container>
@@ -16,7 +19,9 @@ export function Presentation() {
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam.
         </PresentationDetails>
-        <PurchaseButton />
+        <PurchaseButton
+          onOpenNewSellingModal={() => onOpenNewSellingModal(BASIC_PLAN_PRICE)}
+        />
       </Container>
     </>
   );

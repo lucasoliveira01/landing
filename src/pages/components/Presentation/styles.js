@@ -7,6 +7,10 @@ export const Container = styled.div`
   margin: 9rem auto 0 auto;
   flex-direction: column;
   text-align: center;
+
+  @media (max-width: 1366px) {
+    margin: 3rem auto 0 auto;
+  }
 `;
 
 export const PresentationSubtitle = styled.h3`

@@ -1,10 +1,10 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { StyledButton } from "./styles";
 
-export function PurchaseButton() {
+export function PurchaseButton({ onOpenNewSellingModal }) {
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={onOpenNewSellingModal}>
         Purchase now
         <FaShoppingCart />
       </StyledButton>

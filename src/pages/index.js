@@ -10,9 +10,10 @@ import { Pricing } from "./components/Pricing";
 
 export default function Home() {
   const [isNewSellingModalOpen, setIsNewSellingModalOpen] = useState(false);
+  const [price, setPrice] = useState(false);
 
-  function handleOpenNewSellingModal() {
-    console.log("index handle open");
+  function handleOpenNewSellingModal(price) {
+    setPrice(price);
     setIsNewSellingModalOpen(true);
   }
 
@@ -25,15 +26,22 @@ export default function Home() {
       <Wrapper>
         <Main>
           <div className="inner">
-            <Presentation />
+            <Presentation
+              onOpenNewSellingModal={(price) =>
+                handleOpenNewSellingModal(price)
+              }
+            />
             <Features />
             <HowItWorks />
             <Pricing
-              onOpenNewSellingModal={handleOpenNewSellingModal}
+              onOpenNewSellingModal={(price) =>
+                handleOpenNewSellingModal(price)
+              }
               id="teste"
             />
             <Footer />
             <NewSellingModal
+              price={price}
               isOpen={isNewSellingModalOpen}
               onRequestClose={handleCloseNewSellingModal}
             />
