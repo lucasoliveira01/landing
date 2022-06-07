@@ -5,7 +5,8 @@ import { RiMoneyDollarCircleFill, RiAccountCircleFill } from "react-icons/ri";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import {
   Container,
@@ -16,7 +17,37 @@ import {
   FormContent,
   PostPurchase,
   PriceInformation,
+  FormItem,
 } from "./styles";
+
+const validationSchemaPerStep = [
+  yup.object({
+    firstName: yup
+      .string("Please enter only letters.")
+      .required("Please enter your first name."),
+    lastName: yup
+      .string("Please enter only letters.")
+      .required("Please enter your last name."),
+    email: yup
+      .string()
+      .email("Please enter a valid email address.")
+      .required("Please enter your email."),
+  }),
+  yup.object({
+    creditCard: yup
+      .number()
+      .required("")
+      .typeError("Please enter your credit card number."),
+  }),
+  yup.object({
+    acceptedTerms: yup
+      .boolean()
+      .oneOf([true], "Please accept our terms and conditions."),
+    acceptedNewsletter: yup
+      .boolean()
+      .oneOf([true], "Please accept receive news and updates."),
+  }),
+];
 
 const steps = ["Personal Info", "Billing Info", "Legal Info"];
 
@@ -25,25 +56,30 @@ export function NewSellingModal({ isOpen, onRequestClose, price }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
 
+  const currentValidationSchema = validationSchemaPerStep[activeStep];
+
   const {
+    trigger,
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
     criteriaMode: "all",
+    mode: "onBlur",
+    resolver: yupResolver(currentValidationSchema),
   });
 
   const onSubmit = (data) => {
     console.log(data);
     setEmail(data.email);
     setName(data.firstName);
-    localStorage.setItem("@landing/email", data.email);
     handleNext();
   };
 
-  const handleNext = () => {
-    console.log(errors);
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = async () => {
+    const isStepValid = await trigger();
+
+    if (isStepValid) setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -121,23 +157,35 @@ export function NewSellingModal({ isOpen, onRequestClose, price }) {
                 <FormContent>
                   <h2>Personal Information</h2>
                   <div style={{ display: "flex" }}>
-                    <input
-                      style={{ marginRight: "1rem" }}
-                      type="text"
-                      placeholder="First Name"
-                      {...register("firstName")}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Last Name"
-                      {...register("lastName")}
-                    />
+                    <FormItem>
+                      <input
+                        className={errors.firstName ? "requiredError" : ""}
+                        style={{ marginRight: "1rem", width: "8rem" }}
+                        type="text"
+                        placeholder="First Name"
+                        {...register("firstName")}
+                      />
+                      <p>{errors.firstName?.message}</p>
+                    </FormItem>
+                    <FormItem>
+                      <input
+                        className={errors.lastName ? "requiredError" : ""}
+                        type="text"
+                        placeholder="Last Name"
+                        {...register("lastName")}
+                      />
+                      <p>{errors.lastName?.message}</p>
+                    </FormItem>
                   </div>
-                  <input
-                    type="text"
-                    placeholder="E-mail Address"
-                    {...register("email")}
-                  />
+                  <FormItem>
+                    <input
+                      className={errors.email ? "requiredError" : ""}
+                      type="text"
+                      placeholder="E-mail Address"
+                      {...register("email")}
+                    />
+                    <p>{errors.email?.message}</p>
+                  </FormItem>
                 </FormContent>
                 <Buttons>
                   <button type="button" onClick={() => handleNext()}>
@@ -150,11 +198,14 @@ export function NewSellingModal({ isOpen, onRequestClose, price }) {
               <section>
                 <FormContent>
                   <h2>Billing Information</h2>
-                  <input
-                    type="text"
-                    placeholder="Credit Card Number"
-                    {...register("creditCard")}
-                  />
+                  <FormItem>
+                    <input
+                      type="text"
+                      placeholder="Credit Card Number"
+                      {...register("creditCard")}
+                    />
+                    <p>{errors.creditCard?.message}</p>
+                  </FormItem>
                 </FormContent>
                 <Buttons>
                   <button type="button" onClick={() => handleBack()}>
@@ -170,22 +221,28 @@ export function NewSellingModal({ isOpen, onRequestClose, price }) {
               <section>
                 <FormContent>
                   <h2>Legal Information</h2>
-
-                  <TermsContainer>
-                    <input type="checkbox" {...register("acceptedTerms")} />
-                    <span>
-                      I accept the <span>Terms and Conditions</span>.
-                    </span>
-                  </TermsContainer>
-                  <TermsContainer>
-                    <input
-                      type="checkbox"
-                      {...register("acceptedNewsletter")}
-                    />
-                    <span>I accept to receive news and updates on e-mail.</span>
-                  </TermsContainer>
+                  <FormItem>
+                    <TermsContainer>
+                      <input type="checkbox" {...register("acceptedTerms")} />
+                      <span>
+                        I accept the <span>Terms and Conditions</span>.
+                      </span>
+                    </TermsContainer>
+                    <p>{errors.acceptedTerms?.message}</p>
+                  </FormItem>
+                  <FormItem>
+                    <TermsContainer>
+                      <input
+                        type="checkbox"
+                        {...register("acceptedNewsletter")}
+                      />
+                      <span>
+                        I accept to receive news and updates on e-mail.
+                      </span>
+                    </TermsContainer>
+                    <p>{errors.acceptedNewsletter?.message}</p>
+                  </FormItem>
                 </FormContent>
-
                 <Buttons>
                   <button type="button" onClick={() => handleBack()}>
                     Previous

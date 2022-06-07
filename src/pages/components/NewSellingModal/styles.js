@@ -20,7 +20,7 @@ export const Stepper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 2rem auto 0 auto;
+  margin: 1rem auto 0 auto;
 
   svg.stepIcon {
     color: white;
@@ -42,7 +42,7 @@ export const TermsContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: var(--white);
 
   input[type="checkbox"] {
@@ -61,7 +61,7 @@ export const TermsContainer = styled.div`
 `;
 
 export const Buttons = styled.div`
-  margin-top: 2rem;
+  margin-top: 3rem;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -107,19 +107,11 @@ export const StepSeparator = styled.hr`
   margin: auto;
 `;
 
-export const FormContent = styled.div`
-  height: 5rem;
-
-  h2 {
-    color: var(--white);
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-
+export const FormItem = styled.div`
   p {
-    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.5rem;
     color: var(--white);
-    margin-bottom: 1rem;
   }
 
   input[type="text"] {
@@ -129,12 +121,21 @@ export const FormContent = styled.div`
     border-radius: 4px;
     border: 1px solid white;
     padding: 10px 15px;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
     font-size: 0.6rem;
 
     &.requiredError {
       border-color: red;
     }
+  }
+`;
+
+export const FormContent = styled.div`
+  height: 5rem;
+  h2 {
+    color: var(--white);
+    font-size: 1rem;
+    margin-bottom: 1rem;
   }
 `;
 
