@@ -6,7 +6,6 @@ export const Container = styled.div`
 
 export const Form = styled.form`
   margin: 0 auto;
-  width: 100%;
   height: 12rem;
 
   padding: 0 2rem;
@@ -114,6 +113,8 @@ export const FormItem = styled.div`
     color: var(--white);
   }
 
+  flex-grow: 1;
+
   input[type="text"] {
     display: block;
     box-sizing: border-box;
@@ -132,6 +133,7 @@ export const FormItem = styled.div`
 
 export const FormContent = styled.div`
   height: 5rem;
+
   h2 {
     color: var(--white);
     font-size: 1rem;

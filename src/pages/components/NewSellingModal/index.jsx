@@ -156,11 +156,15 @@ export function NewSellingModal({ isOpen, onRequestClose, price }) {
               <section>
                 <FormContent>
                   <h2>Personal Information</h2>
-                  <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                    }}
+                  >
                     <FormItem>
                       <input
+                        style={{ marginRight: "1rem", width: "95%" }}
                         className={errors.firstName ? "requiredError" : ""}
-                        style={{ marginRight: "1rem", width: "8rem" }}
                         type="text"
                         placeholder="First Name"
                         {...register("firstName")}
